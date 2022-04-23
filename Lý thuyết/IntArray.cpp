@@ -19,8 +19,8 @@ public:
     bool contains(int);
     friend ostream &operator<<(ostream &, IntArray &);
     friend istream &operator>>(istream &, IntArray &);
-    // int operator[]();
-    // void delete(int);
+    int operator[](int);
+    void removeAt(int);
 };
 
 IntArray::IntArray(int size){
@@ -99,6 +99,42 @@ ostream &operator<<(ostream &os, IntArray &a){
     return os;
 }
 
+istream &operator>>(istream &is, IntArray &a){
+    int x;
+    cout << "Size + ";
+    is >> x;
+    int i = a.n;
+    a.n += x;
+    cout << "Input: ";
+    for(i; i < a.n; i++)
+        is >> a.v[i];
+
+    return is;
+}
+
+int IntArray::operator[](const int i){
+    return v[i];
+}
+
+bool IntArray::contains(int x){
+    cout << "Nhap vao so can tim: ";
+    cin >> x;
+    for (int i = 0; i < n; i++){
+        if(v[i] == x)
+            return true;
+    }
+    return false;
+}
+
+void IntArray::removeAt(int z){
+    if(z >= 0 && z < n){
+        for(int i = z; i < n -1; i++){
+            v[i] = v[i+1];
+        }
+        n--;
+    }
+}
+
 int main(){
     int k;
     cout << "Nhap vao so phan tu cua mang: ";
@@ -115,4 +151,31 @@ int main(){
     //a.Output();
     cout << a;
 
+    b = a;          // Gan mang b = a
+    cout << "Mang b la: ";
+    //b.Output();    
+    cout << b; 
+
+    int m;          // index of x
+    cout << "Nhap gia tri m can tim: ";
+    cin >> m;
+    cout << "Vi tri thu " << m << " trong mang a la: ";
+    cout << a.indexOf(m) << endl;
+
+    IntArray c(5);  // Operator == 
+    c.Add();
+    if (c == a)
+        cout << "Bang nhau." << endl;
+    else 
+        cout << "Khong bang nhau." << endl;
+
+    // operator []
+    cout << a[2] << endl;
+    
+    // remove v[i]
+    c.removeAt(2);
+    cout << "Mang C: " << c;
+    // operator >>
+    cin >> c;
+    cout << "Mang C: " << c;
 }
